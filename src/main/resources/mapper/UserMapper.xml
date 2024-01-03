@@ -15,4 +15,14 @@
         <result property="created" column="created" />
         <result property="lastLogin" column="last_login" />
     </resultMap>
+    <select id="getUserWithPassword" resultMap="name_password">
+        SELECT id, name, password
+        FROM user
+        WHERE name = #{name}
+    </select>
+    <resultMap id="name_password" type="User">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+    </resultMap>
 </mapper>

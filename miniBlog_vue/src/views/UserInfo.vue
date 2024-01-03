@@ -27,18 +27,18 @@ const created = ref(new Date())
 const lastLogin = ref(new Date())
 
 onMounted(() => {
-    const route = useRoute()
-    let username = route.params.username
-    axios.get('http://localhost:8080/user/' + username)
-    .then((res) => {
-        //console.log(res.data.data)
-        name.value = res.data.data.name
-        email.value = res.data.data.email
-        created.value = res.data.data.created
-        lastLogin.value = res.data.data.created
-    })
-    .catch((error) => {
-       	console.log(error)
-    });
+  const route = useRoute()
+  let username = route.params.username
+  axios.get('http://localhost:8080/user/' + username)
+  .then((res) => {
+    //console.log(res.data.data)
+    name.value = res.data.data.name
+    email.value = res.data.data.email
+    created.value = res.data.data.created
+    lastLogin.value = res.data.data.created
+  })
+  .catch((error) => {
+    console.log(error)
+  });
 })
 </script>

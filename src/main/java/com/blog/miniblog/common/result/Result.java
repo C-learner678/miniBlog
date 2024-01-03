@@ -17,6 +17,10 @@ public class Result implements Serializable{
         return r;
     }
 
+    public static Result success() {
+        return result(200, "操作成功", null);
+    }
+
     public static Result success(Object data) {
         return result(200, "操作成功", data);
     }

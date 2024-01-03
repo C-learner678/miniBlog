@@ -6,4 +6,5 @@ import com.blog.miniblog.entity.User;
 @Mapper
 public interface UserMapper {
     public User selectUser(String name);
+    public User getUserWithPassword(String name);
 }

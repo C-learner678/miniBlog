@@ -16,4 +16,8 @@ public class UserServiceImpl implements UserService{
     public User selectUser(String name) {
         return this.userMapper.selectUser(name);
     }
+
+    public User getUserWithPassword(String name){
+        return this.userMapper.getUserWithPassword(name);
+    }
 }
