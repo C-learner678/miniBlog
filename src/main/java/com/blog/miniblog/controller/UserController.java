@@ -29,18 +29,27 @@ public class UserController {
         String name = user.getName();
         String password = user.getPassword();
         User u2 = userService.getUserWithPassword(name);
-        Assert.notNull(u2, "找不到该用户");
+        Assert.notNull(u2, "用户名或密码错误");
+        //使用RSA私钥解密前端用公钥加密过的密码
         password = RSAUtils.decode(password, RSA.getPrivateKey());
+        //再使用BCrypt重新加密
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Assert.isTrue(passwordEncoder.matches(password, u2.getPassword()), "密码错误");
+        //与数据库中已加密过的密码对比
+        Assert.isTrue(passwordEncoder.matches(password, u2.getPassword()), "用户名或密码错误");
         userService.setLastLogin(name);
         session.setAttribute("user_name", name);
         return Result.success("登录成功");
     }
     @PostMapping("/signUp")
     public Object signUp(@RequestBody User user, HttpSession session){
+        String name = user.getName();
         String password = user.getPassword();
+        //先验证是否已经存在同名用户
+        User u2 = userService.selectUser(name);
+        Assert.isNull(u2, "已存在该用户");
+        //使用RSA私钥解密前端用公钥加密过的密码
         password = RSAUtils.decode(password, RSA.getPrivateKey());
+        //再使用BCrypt重新加密
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = passwordEncoder.encode(password);
         user.setPassword(encryptedPassword);

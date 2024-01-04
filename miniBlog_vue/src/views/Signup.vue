@@ -90,8 +90,12 @@ const signUp = async (formEl: FormInstance | undefined) => {
             router.push({ path: 'userinfo/' + signUpForm.name })
           })
           .catch((error) => {
-            ElMessage.error('注册失败')
             console.log(error)
+            if(error.response.data.message === "已存在该用户"){
+              ElMessage.error('已存在该用户')
+            }else{
+              ElMessage.error('注册失败')
+            }
           });
         }else{
           console.log('获取公钥失败')
