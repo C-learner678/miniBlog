@@ -10,3 +10,5 @@ mybatis:
   type-aliases-package: com.blog.miniblog.entity
   configuration:
     mapUnderscoreToCamelCase: true
+server:
+  port: 8081

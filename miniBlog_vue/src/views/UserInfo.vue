@@ -20,6 +20,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const name = ref("")
 const email = ref("")
@@ -29,16 +30,16 @@ const lastLogin = ref(new Date())
 onMounted(() => {
   const route = useRoute()
   let username = route.params.username
-  axios.get('http://localhost:8080/user/' + username)
+  axios.get('http://localhost:8081/user/' + username)
   .then((res) => {
-    //console.log(res.data.data)
     name.value = res.data.data.name
     email.value = res.data.data.email
     created.value = res.data.data.created
-    lastLogin.value = res.data.data.created
+    lastLogin.value = res.data.data.lastLogin
   })
   .catch((error) => {
     console.log(error)
+    ElMessage.error('用户信息加载失败')
   });
 })
 </script>

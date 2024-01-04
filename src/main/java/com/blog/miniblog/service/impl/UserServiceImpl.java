@@ -20,4 +20,12 @@ public class UserServiceImpl implements UserService{
     public User getUserWithPassword(String name){
         return this.userMapper.getUserWithPassword(name);
     }
+
+    public void setLastLogin(String name) {
+        this.userMapper.setLastLogin(name);
+    }
+
+    public void signUp(User user){
+        this.userMapper.signUp(user);
+    }
 }

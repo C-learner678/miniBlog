@@ -25,4 +25,13 @@
         <result property="name" column="name" />
         <result property="password" column="password" />
     </resultMap>
+    <update id="setLastLogin">
+        UPDATE user
+        SET last_login = now()
+        WHERE name = #{name}
+    </update>
+    <insert id="signUp" parameterType="com.blog.miniblog.entity.User">
+        INSERT INTO user(name, password, email, status, created, last_login)
+        VALUES (#{name}, #{password}, #{email}, 0, now(), now())
+    </insert>
 </mapper>
