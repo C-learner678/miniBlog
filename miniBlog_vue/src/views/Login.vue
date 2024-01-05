@@ -27,10 +27,10 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import axios from 'axios'
 import JSEncrypt from 'jsencrypt';
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { getPublicKey, postLogin } from '../api/api'
 
 interface loginForm {
   name: string
@@ -56,31 +56,25 @@ const router = useRouter()
 
 const login = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
+  await formEl.validate((valid) => {
     if (valid) {
-      axios.get('http://localhost:8081/getPublicKey')
+      getPublicKey()
       .then((res) => {
-        let publicKey = res.data.data;
+        let publicKey = res.data;
         if(publicKey){
           let encrypt = new JSEncrypt()
           encrypt.setPublicKey(publicKey)
-          axios.post('http://localhost:8081/login', {
-            name: loginForm.name,
-            password: encrypt.encrypt(loginForm.password)
-          })
+          postLogin(loginForm.name, encrypt.encrypt(loginForm.password))
           .then((res) => {
-            ElMessage.success(res.data.data)
+            sessionStorage.setItem("user", loginForm.name);
+            sessionStorage.setItem("token", res.data)
+            ElMessage.success("登录成功")
             router.push({ path: 'userinfo/' + loginForm.name })
           })
           .catch((error) => {
             ElMessage.error('用户名或密码错误')
-            console.log(error)
           });
-        }else{
-          console.log('获取公钥失败')
         }
-      }).catch((error) => {
-        console.log(error)
       })
     } else {
       console.log('error submit!')

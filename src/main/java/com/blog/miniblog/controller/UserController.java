@@ -12,6 +12,7 @@ import com.blog.miniblog.service.UserService;
 import com.blog.miniblog.common.result.Result;
 import com.blog.miniblog.common.security.RSA;
 import com.blog.miniblog.common.security.RSAUtils;
+import com.blog.miniblog.common.security.JWTUtils;
 
 @Slf4j
 @RestController
@@ -25,7 +26,7 @@ public class UserController {
         return Result.success(user);
     }
     @PostMapping("/login")
-    public Object getPassword(@RequestBody User user, HttpSession session){
+    public Object login(@RequestBody User user){
         String name = user.getName();
         String password = user.getPassword();
         User u2 = userService.getUserWithPassword(name);
@@ -37,11 +38,10 @@ public class UserController {
         //与数据库中已加密过的密码对比
         Assert.isTrue(passwordEncoder.matches(password, u2.getPassword()), "用户名或密码错误");
         userService.setLastLogin(name);
-        session.setAttribute("user_name", name);
-        return Result.success("登录成功");
+        return Result.success(JWTUtils.getToken(name, u2.getPassword()));
     }
     @PostMapping("/signUp")
-    public Object signUp(@RequestBody User user, HttpSession session){
+    public Object signUp(@RequestBody User user){
         String name = user.getName();
         String password = user.getPassword();
         //先验证是否已经存在同名用户
@@ -54,7 +54,6 @@ public class UserController {
         String encryptedPassword = passwordEncoder.encode(password);
         user.setPassword(encryptedPassword);
         userService.signUp(user);
-        session.setAttribute("user_name", user.getName());
         return Result.success("注册成功");
     }
 }

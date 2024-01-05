@@ -11,6 +11,13 @@ import com.blog.miniblog.common.result.Result;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler{
+    //Token
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = TokenException.class)
+    public Result handler(TokenException e){
+        log.error("Token异常：" + e.getMessage());
+        return Result.fail(e.getMessage());
+    }
     //Assert
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = IllegalArgumentException.class)

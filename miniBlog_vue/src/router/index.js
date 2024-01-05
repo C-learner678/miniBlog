@@ -31,4 +31,31 @@ const router = createRouter({
   history: createWebHistory(),
   routes: routes
 })
+
+//from: https://juejin.cn/post/7225478065391927356#heading-5
+// 检查是否存在于免登录白名单
+function inWhiteList(toPath) {
+  const whiteList = ['/getPublickey', '/login', '/register']
+  const path = whiteList.find((value) => {
+      // 使用正则匹配
+      const reg = new RegExp('^' + value)
+      return reg.test(toPath)
+  })
+  return !!path
+}
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem("token")
+  if (inWhiteList(to.path)) {
+    next()
+  } else {
+    //用户已登录
+    if (token) {
+      next()
+    } else {
+      next(`/login`)
+    }
+  }
+})
+
 export default router

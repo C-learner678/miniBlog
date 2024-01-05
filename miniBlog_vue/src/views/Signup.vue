@@ -32,10 +32,10 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import axios from 'axios'
 import JSEncrypt from 'jsencrypt';
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { getPublicKey, postSignUp } from '../api/api';
 
 interface signUpForm {
   name: string
@@ -68,40 +68,29 @@ const router = useRouter()
 
 const signUp = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  if (signUpForm.password != signUpForm.password2){
+  if (signUpForm.password !== signUpForm.password2){
     ElMessage.error('两次密码输入不一致')
     return
   }
-  await formEl.validate((valid, fields) => {
+  await formEl.validate((valid) => {
     if (valid) {
-      axios.get('http://localhost:8081/getPublicKey')
+      getPublicKey()
       .then((res) => {
-        let publicKey = res.data.data;
+        let publicKey = res.data;
         if(publicKey){
           let encrypt = new JSEncrypt()
           encrypt.setPublicKey(publicKey)
-          axios.post('http://localhost:8081/signUp', {
-            name: signUpForm.name,
-            password: encrypt.encrypt(signUpForm.password),
-            email: signUpForm.email
-          })
+          postSignUp(signUpForm.name, encrypt.encrypt(signUpForm.password), signUpForm.email)
           .then((res) => {
-            ElMessage.success(res.data.data)
+            ElMessage.success("注册成功")
             router.push({ path: 'userinfo/' + signUpForm.name })
           })
           .catch((error) => {
-            console.log(error)
             if(error.response.data.message === "已存在该用户"){
               ElMessage.error('已存在该用户')
-            }else{
-              ElMessage.error('注册失败')
             }
           });
-        }else{
-          console.log('获取公钥失败')
         }
-      }).catch((error) => {
-        console.log(error)
       })
     } else {
       console.log('error submit!')
