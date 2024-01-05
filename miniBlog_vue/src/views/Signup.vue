@@ -82,8 +82,9 @@ const signUp = async (formEl: FormInstance | undefined) => {
           encrypt.setPublicKey(publicKey)
           postSignUp(signUpForm.name, encrypt.encrypt(signUpForm.password), signUpForm.email)
           .then((res) => {
+            sessionStorage.setItem("token", res.data)
             ElMessage.success("注册成功")
-            router.push({ path: 'userinfo/' + signUpForm.name })
+            router.push({ path: 'welcome' })
           })
           .catch((error) => {
             if(error.response.data.message === "已存在该用户"){

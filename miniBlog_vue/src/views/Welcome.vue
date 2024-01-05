@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h3>用户信息</h3>
     <div>
-      用户名：{{ name }}
+      <h3>欢迎您，{{ name }}</h3>
+    </div>
+    <div>
+      个人信息
     </div>
     <div>
       邮箱：{{ email }}
@@ -13,6 +15,11 @@
     <div>
       上次登录：<el-date-picker v-model="lastLogin" type="datetime" readonly/>
     </div>
+    <div>
+      <ElButton @click="modifyPassword">修改密码</ElButton>
+      <ElButton @click="modifyUserInfo">修改邮箱</ElButton>
+      <ElButton @click="logout">退出登录</ElButton>
+    </div>
   </div>
 </template>
 
@@ -22,7 +29,7 @@ import { useRoute } from 'vue-router'
 import { ElButton, ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
-import { getUserInfo } from '../api/api'
+import { getCurrentUserInfo } from '../api/api'
 
 const router = useRouter()
 
@@ -32,9 +39,8 @@ const created = ref(new Date())
 const lastLogin = ref(new Date())
 
 onMounted(() => {
-  const route = useRoute()
-  let username = route.params.username
-  getUserInfo(username)
+  //不传其他参数，只通过token判断身份
+  getCurrentUserInfo()
   .then((res) => {
     name.value = res.data.name
     email.value = res.data.email
@@ -42,4 +48,18 @@ onMounted(() => {
     lastLogin.value = res.data.lastLogin
   })
 })
+
+function logout(){
+  sessionStorage.clear()
+  router.push( {path: '/login'} )
+}
+
+function modifyUserInfo(){
+
+}
+
+function modifyPassword(){
+
+}
+
 </script>

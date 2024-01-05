@@ -66,10 +66,9 @@ const login = async (formEl: FormInstance | undefined) => {
           encrypt.setPublicKey(publicKey)
           postLogin(loginForm.name, encrypt.encrypt(loginForm.password))
           .then((res) => {
-            sessionStorage.setItem("user", loginForm.name);
             sessionStorage.setItem("token", res.data)
             ElMessage.success("登录成功")
-            router.push({ path: 'userinfo/' + loginForm.name })
+            router.push({ path: 'welcome' })
           })
           .catch((error) => {
             ElMessage.error('用户名或密码错误')

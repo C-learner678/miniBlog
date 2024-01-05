@@ -1,6 +1,5 @@
 package com.blog.miniblog.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,8 +19,14 @@ public class UserController {
     @Autowired
     private UserService userService;
     @GetMapping("/user/{name}")
-    public Object selectUser(@PathVariable String name) {
+    public Object getUserInfo(@PathVariable String name) {
         User user = userService.selectUser(name);
+        Assert.notNull(user, "找不到用户");
+        return Result.success(user);
+    }
+    @GetMapping("/currentUser")
+    public Object getCurrentUserInfo() {
+        User user = JWTUtils.getCurrentUser();
         Assert.notNull(user, "找不到用户");
         return Result.success(user);
     }

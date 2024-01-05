@@ -1,9 +1,9 @@
 import {request} from '../request/request' //导入request
 
 export function getPublicKey(){
-    return request({
-      url: '/getPublicKey',
-      method: 'get',
+  return request({
+    url: '/getPublicKey',
+    method: 'get',
   })  
 }
 
@@ -31,8 +31,15 @@ export function postSignUp(name:string, password:string, email:string){
 }
 
 export function getUserInfo(username:string) {
-    return request({
-        url: '/user/' + username,
-        method: 'get',
-    })
+  return request({
+    url: '/user/' + username,
+    method: 'get',
+  })
+}
+
+export function getCurrentUserInfo() {
+  return request({
+    url: '/currentUser',
+    method: 'get',
+  })
 }

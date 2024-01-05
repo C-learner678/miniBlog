@@ -45,7 +45,7 @@ public class JWTUtils {
             String token = request.getHeader("token");
             if (token != null && !token.isBlank()) {
                 String name = JWT.decode(token).getAudience().get(0);
-                return staticUserService.getUserWithPassword(name);
+                return staticUserService.selectUser(name);
             }
         } catch (Exception e) {
             return null;

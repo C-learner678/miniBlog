@@ -3,6 +3,7 @@ import { defineAsyncComponent } from 'vue'
 import UserInfo from '../views/UserInfo.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import Welcome from '../views/Welcome.vue'
 
 const routes = [
   {
@@ -21,9 +22,14 @@ const routes = [
     component: Signup
   },
   {
-    path: '/userinfo/:username',
+    path: '/userInfo/:username',
     name: 'UserInfo',
     component: UserInfo
+  },
+  {
+    path: '/welcome',
+    name: 'Welcome',
+    component: Welcome
   },
 ];
 
@@ -35,7 +41,7 @@ const router = createRouter({
 //from: https://juejin.cn/post/7225478065391927356#heading-5
 // 检查是否存在于免登录白名单
 function inWhiteList(toPath) {
-  const whiteList = ['/getPublickey', '/login', '/register']
+  const whiteList = ['/login', '/signup', '/user/']
   const path = whiteList.find((value) => {
       // 使用正则匹配
       const reg = new RegExp('^' + value)
