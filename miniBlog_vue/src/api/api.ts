@@ -43,3 +43,14 @@ export function getCurrentUserInfo() {
     method: 'get',
   })
 }
+
+export function postModifyPassword(oldPassword:string, newPassword:string) {
+  return request({
+    url: '/modifyPassword',
+    method: 'post',
+    data: {
+      oldPassword,
+      newPassword
+    }
+  })
+}

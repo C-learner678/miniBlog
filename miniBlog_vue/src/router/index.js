@@ -4,6 +4,7 @@ import UserInfo from '../views/UserInfo.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Welcome from '../views/Welcome.vue'
+import ModifyPassword from '../views/ModifyPassword.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/welcome',
     name: 'Welcome',
     component: Welcome
+  },
+  {
+    path: '/modifyPassword',
+    name: 'modifyPassword',
+    component: ModifyPassword
   },
 ];
 

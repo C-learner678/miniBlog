@@ -59,7 +59,7 @@ function modifyUserInfo(){
 }
 
 function modifyPassword(){
-
+  router.push( {path: '/modifyPassword'} )
 }
 
 </script>

@@ -32,7 +32,7 @@ public class JWTUtils {
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
-        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
         Date modifiedDate = calendar.getTime();
         return JWT.create().withAudience(name) // 将 user id 保存到 token 里面,作为载荷
                 .withExpiresAt(modifiedDate) // 2小时后token过期
@@ -45,7 +45,7 @@ public class JWTUtils {
             String token = request.getHeader("token");
             if (token != null && !token.isBlank()) {
                 String name = JWT.decode(token).getAudience().get(0);
-                return staticUserService.selectUser(name);
+                return staticUserService.selectUserWithoutPassword(name);
             }
         } catch (Exception e) {
             return null;

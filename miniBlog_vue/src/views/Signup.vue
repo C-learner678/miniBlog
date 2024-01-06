@@ -93,8 +93,6 @@ const signUp = async (formEl: FormInstance | undefined) => {
           });
         }
       })
-    } else {
-      console.log('error submit!')
     }
   })
 }

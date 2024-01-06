@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import JSEncrypt from 'jsencrypt';
 import { ElMessage } from 'element-plus'
@@ -75,8 +75,6 @@ const login = async (formEl: FormInstance | undefined) => {
           });
         }
       })
-    } else {
-      console.log('error submit!')
     }
   })
 }
@@ -84,6 +82,14 @@ const login = async (formEl: FormInstance | undefined) => {
 function signup(){
   router.push({ path: 'signup' })
 }
+
+//已登录则自动进入欢迎界面
+onMounted(() => {
+  const token = sessionStorage.getItem("token")
+  if (token){
+    router.push({ path: 'welcome' })
+  }
+})
 
 </script>
 

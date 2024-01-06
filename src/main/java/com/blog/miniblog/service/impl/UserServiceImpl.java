@@ -13,12 +13,20 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    public User selectUser(String name) {
-        return this.userMapper.selectUser(name);
+    public User selectUser(String name, boolean password) {
+        User user = this.userMapper.selectUser(name);
+        if(!password){
+            user.setPassword(null);
+        }
+        return user;
     }
 
-    public User getUserWithPassword(String name){
-        return this.userMapper.getUserWithPassword(name);
+    public User selectUserWithPassword(String name) {
+        return this.selectUser(name, true);
+    }
+
+    public User selectUserWithoutPassword(String name) {
+        return this.selectUser(name, false);
     }
 
     public void setLastLogin(String name) {
@@ -27,5 +35,9 @@ public class UserServiceImpl implements UserService{
 
     public void signUp(User user){
         this.userMapper.signUp(user);
+    }
+
+    public void setPassword(User user) {
+        this.userMapper.setPassword(user);
     }
 }
