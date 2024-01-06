@@ -80,4 +80,15 @@ public class UserController {
         userService.setPassword(user);
         return Result.success("修改密码成功");
     }
+    @PostMapping("/modifyInfo")
+    public Object modifyInfo(@RequestBody Map<String, Object> map){
+        String email = (String)map.get("email");
+        String description = (String)map.get("description");
+        User user = JWTUtils.getCurrentUser();
+        Assert.notNull(user, "找不到用户");
+        user.setEmail(email);
+        user.setDescription(description);
+        userService.setInfo(user);
+        return Result.success("修改个人信息成功");
+    }
 }

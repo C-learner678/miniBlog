@@ -12,4 +12,5 @@ public class User {
     private Integer status;
     private Date created;
     private Date lastLogin;
+    private String description;
 }

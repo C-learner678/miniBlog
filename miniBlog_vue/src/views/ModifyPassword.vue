@@ -50,12 +50,15 @@ const passwordForm = reactive<passwordForm>({
 const rules = reactive<FormRules<passwordForm>>({
   oldPassword: [
     { required: true, message: '请输入旧密码'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
   ],
   newPassword: [
     { required: true, message: '请输入新密码'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
   ],
   newPassword2: [
     { required: true, message: '请再次输入新密码'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
   ],
 })
 

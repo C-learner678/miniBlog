@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blog.miniblog.mapper.UserMapper">
     <select id="selectUser" resultMap="user">
-        SELECT id, name, password, email, status, created, last_login
+        SELECT id, name, password, email, status, created, last_login, description
         FROM user
         WHERE name = #{name}
     </select>
@@ -14,6 +14,7 @@
         <result property="status" column="status" />
         <result property="created" column="created" />
         <result property="lastLogin" column="last_login" />
+        <result property="description" column="description" />
     </resultMap>
     <update id="setLastLogin">
         UPDATE user
@@ -21,12 +22,17 @@
         WHERE name = #{name}
     </update>
     <insert id="signUp" parameterType="com.blog.miniblog.entity.User">
-        INSERT INTO user(name, password, email, status, created, last_login)
-        VALUES (#{name}, #{password}, #{email}, 0, now(), now())
+        INSERT INTO user(name, password, email, status, created, last_login, description)
+        VALUES (#{name}, #{password}, #{email}, 0, now(), now(), #{description})
     </insert>
     <update id="setPassword" parameterType="com.blog.miniblog.entity.User">
         UPDATE user
         SET password = #{password}
+        WHERE name = #{name}
+    </update>
+    <update id="setInfo" parameterType="com.blog.miniblog.entity.User">
+        UPDATE user
+        SET email = #{email}, description = #{description}
         WHERE name = #{name}
     </update>
 </mapper>

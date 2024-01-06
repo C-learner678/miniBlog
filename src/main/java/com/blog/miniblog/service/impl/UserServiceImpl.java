@@ -40,4 +40,8 @@ public class UserServiceImpl implements UserService{
     public void setPassword(User user) {
         this.userMapper.setPassword(user);
     }
+
+    public void setInfo(User user) {
+        this.userMapper.setInfo(user);
+    }
 }

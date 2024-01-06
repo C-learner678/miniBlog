@@ -18,7 +18,7 @@ export function postLogin(name:string, password:string){
   })  
 }
 
-export function postSignUp(name:string, password:string, email:string){
+export function postSignUp(name:string, password:string, email:string, description:string){
   return request({
     url: '/signUp',
     method: 'post',
@@ -26,6 +26,7 @@ export function postSignUp(name:string, password:string, email:string){
       name,
       password,
       email,
+      description,
     }
   })  
 }
@@ -50,7 +51,18 @@ export function postModifyPassword(oldPassword:string, newPassword:string) {
     method: 'post',
     data: {
       oldPassword,
-      newPassword
+      newPassword,
+    }
+  })
+}
+
+export function postModifyInfo(email:string, description:string){
+  return request({
+    url: '/modifyInfo',
+    method: 'post',
+    data: {
+      email,
+      description,
     }
   })
 }

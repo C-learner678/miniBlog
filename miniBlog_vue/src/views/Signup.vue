@@ -20,6 +20,9 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="signUpForm.email"/>
         </el-form-item>
+        <el-form-item label="个人介绍" prop="description">
+          <el-input v-model="signUpForm.description" type="textarea" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="signUp(signUpFormRef)">注册</el-button>
         </el-form-item>
@@ -42,6 +45,7 @@ interface signUpForm {
   password: string
   password2: string
   email: string 
+  description: string
 }
 
 const signUpFormRef = ref<FormInstance>()
@@ -50,17 +54,27 @@ const signUpForm = reactive<signUpForm>({
   password: "",
   password2: "",
   email: "",
+  description: "",
 })
 
 const rules = reactive<FormRules<signUpForm>>({
   name: [
     { required: true, message: '请输入用户名'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
   ],
   password: [
     { required: true, message: '请输入密码'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
   ],
   password2: [
     { required: true, message: '请再次输入密码'},
+    { min: 3, max: 50, message: '长度在3到50之间' },
+  ],
+  email: [
+    { max: 50, message: '长度不超过50' },
+  ],
+  description: [
+    { max: 50, message: '长度不超过100' },
   ]
 })
 
@@ -80,7 +94,7 @@ const signUp = async (formEl: FormInstance | undefined) => {
         if(publicKey){
           let encrypt = new JSEncrypt()
           encrypt.setPublicKey(publicKey)
-          postSignUp(signUpForm.name, encrypt.encrypt(signUpForm.password), signUpForm.email)
+          postSignUp(signUpForm.name, encrypt.encrypt(signUpForm.password), signUpForm.email, signUpForm.description)
           .then((res) => {
             sessionStorage.setItem("token", res.data)
             ElMessage.success("注册成功")

@@ -8,6 +8,9 @@
       邮箱：{{ email }}
     </div>
     <div>
+      个人介绍：{{ description }}
+    </div>
+    <div>
       注册时间：<el-date-picker v-model="created" type="datetime" readonly/>
     </div>
     <div>
@@ -28,6 +31,7 @@ const router = useRouter()
 
 const name = ref("")
 const email = ref("")
+const description = ref("")
 const created = ref(new Date())
 const lastLogin = ref(new Date())
 
@@ -38,6 +42,7 @@ onMounted(() => {
   .then((res) => {
     name.value = res.data.name
     email.value = res.data.email
+    description.value = res.data.description
     created.value = res.data.created
     lastLogin.value = res.data.lastLogin
   })
