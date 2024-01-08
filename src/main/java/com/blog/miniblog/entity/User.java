@@ -13,4 +13,5 @@ public class User {
     private Date created;
     private Date lastLogin;
     private String description;
+    private String avatar;
 }

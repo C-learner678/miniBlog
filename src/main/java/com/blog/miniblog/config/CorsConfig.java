@@ -24,7 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor())
-                .excludePathPatterns("/getPublicKey", "/login", "/signUp", "/user/{name}")
+                .excludePathPatterns("/getPublicKey", "/login", "/signUp", "/user/{name}", "/getImage/{name}")
                 .addPathPatterns("/**");  // 拦截所有请求，通过判断token是否合法来决定是否需要登录
 
     }

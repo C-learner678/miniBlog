@@ -1,6 +1,12 @@
 <template>
   <div>
     <h3>用户信息</h3>
+    <div v-if="available">
+      <el-image style="width: 100px; height: 100px" :src="avatarUrl" fit="fill"/>
+    </div>
+    <div v-else>
+      <el-image style="width: 100px; height: 100px" />
+    </div>
     <div>
       用户名：{{ name }}
     </div>
@@ -27,13 +33,14 @@ import { useRouter } from 'vue-router'
 
 import { getUserInfo } from '../api/api'
 
-const router = useRouter()
-
 const name = ref("")
 const email = ref("")
 const description = ref("")
 const created = ref(new Date())
 const lastLogin = ref(new Date())
+
+const available = ref(false)
+let avatarUrl = ""
 
 onMounted(() => {
   const route = useRoute()
@@ -45,6 +52,8 @@ onMounted(() => {
     description.value = res.data.description
     created.value = res.data.created
     lastLogin.value = res.data.lastLogin
+    avatarUrl = 'http://localhost:8081/getImage/' + res.data.avatar
+    available.value = true
   })
 })
 </script>

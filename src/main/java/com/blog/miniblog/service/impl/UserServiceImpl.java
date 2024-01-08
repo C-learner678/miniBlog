@@ -44,4 +44,8 @@ public class UserServiceImpl implements UserService{
     public void setInfo(User user) {
         this.userMapper.setInfo(user);
     }
+
+    public void setAvatar(User user) {
+        this.userMapper.setAvatar(user);
+    }
 }

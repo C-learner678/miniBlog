@@ -66,3 +66,13 @@ export function postModifyInfo(email:string, description:string){
     }
   })
 }
+
+export function postModifyAvatar(avatar:string){
+  return request({
+    url: '/modifyAvatar',
+    method: 'post',
+    data: {
+      avatar,
+    }
+  })  
+}

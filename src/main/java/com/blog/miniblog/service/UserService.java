@@ -10,4 +10,5 @@ public interface UserService {
     public void signUp(User user);
     public void setPassword(User user);
     public void setInfo(User user);
+    public void setAvatar(User user);
 }

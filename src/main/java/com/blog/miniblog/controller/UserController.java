@@ -91,4 +91,13 @@ public class UserController {
         userService.setInfo(user);
         return Result.success("修改个人信息成功");
     }
+    @PostMapping("/modifyAvatar")
+    public Object modifyAvatar(@RequestBody Map<String, Object> map) {
+        String avatar = (String)map.get("avatar");
+        User user = JWTUtils.getCurrentUser();
+        Assert.notNull(user, "找不到用户");
+        user.setAvatar(avatar);
+        userService.setAvatar(user);
+        return Result.success("修改头像成功");
+    }
 }

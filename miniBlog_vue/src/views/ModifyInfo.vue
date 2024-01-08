@@ -15,7 +15,7 @@
           <el-input v-model="infoForm.email"/>
         </el-form-item>
         <el-form-item label="个人介绍" prop="description">
-          <el-input v-model="infoForm.description"/>
+          <el-input v-model="infoForm.description" type="textarea" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="modifyInfo(infoFormRef)">修改个人信息</el-button>

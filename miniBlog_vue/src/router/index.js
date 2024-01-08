@@ -6,6 +6,7 @@ import Signup from '../views/Signup.vue'
 import Welcome from '../views/Welcome.vue'
 import ModifyPassword from '../views/ModifyPassword.vue'
 import ModifyInfo from '../views/ModifyInfo.vue'
+import ModifyAvatar from '../views/ModifyAvatar.vue'
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     name: 'modifyInfo',
     component: ModifyInfo
   },
+  {
+    path: '/modifyAvatar',
+    name: 'modifyAvatar',
+    component: ModifyAvatar
+  },
 ];
 
 const router = createRouter({
@@ -53,11 +59,9 @@ const router = createRouter({
 //from: https://juejin.cn/post/7225478065391927356#heading-5
 // 检查是否存在于免登录白名单
 function inWhiteList(toPath) {
-  const whiteList = ['/login', '/signup', '/userInfo/']
+  const whiteList = ['/login', '/signup', '/userinfo/',]
   const path = whiteList.find((value) => {
-      // 使用正则匹配
-      const reg = new RegExp('^' + value)
-      return reg.test(toPath)
+    return !toPath.search(value)
   })
   return !!path
 }
