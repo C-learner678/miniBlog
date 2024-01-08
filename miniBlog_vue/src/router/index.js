@@ -7,6 +7,7 @@ import Welcome from '../views/Welcome.vue'
 import ModifyPassword from '../views/ModifyPassword.vue'
 import ModifyInfo from '../views/ModifyInfo.vue'
 import ModifyAvatar from '../views/ModifyAvatar.vue'
+import CreateBlog from '../views/CreateBlog.vue'
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: '/modifyAvatar',
     name: 'modifyAvatar',
     component: ModifyAvatar
+  },
+  {
+    path: '/createBlog',
+    name: 'createBlog',
+    component: CreateBlog
   },
 ];
 

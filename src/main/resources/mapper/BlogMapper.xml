@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.miniblog.mapper.BlogMapper">
+    <select id="selectBlog" resultType="com.blog.miniblog.entity.Blog">
+        SELECT id, user_id, title, description, content, status, created, last_modified
+        FROM blog
+        WHERE id = #{id}
+    </select>
+    <insert id="insertBlog" parameterType="com.blog.miniblog.entity.Blog">
+        INSERT INTO blog(user_id, title, description, content, status, created, last_modified)
+        VALUES (#{userId}, #{title}, #{description}, #{content}, #{status}, now(), now())
+    </insert>
+    <update id="updateBlog" parameterType="com.blog.miniblog.entity.Blog">
+        UPDATE blog
+        SET title = #{title}, description = #{description}, content = #{content}, status = #{status}, last_modified = now()
+        WHERE id = #{id}
+    </update>
+</mapper>

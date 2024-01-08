@@ -101,8 +101,8 @@ const signUp = async (formEl: FormInstance | undefined) => {
             router.push({ path: 'welcome' })
           })
           .catch((error) => {
-            if(error.response.data.message === "已存在该用户"){
-              ElMessage.error('已存在该用户')
+            if(error.response.data.message === "该用户名已被使用"){
+              ElMessage.error('该用户名已被使用')
             }
           });
         }

@@ -21,7 +21,7 @@ public class UserController {
     private UserService userService;
     @GetMapping("/user/{name}")
     public Object getUserInfo(@PathVariable String name) {
-        User user = userService.selectUserWithoutPassword(name);
+        User user = userService.selectUserByName(name, false);
         user.setPassword(null);
         return Result.success(user);
     }
@@ -36,7 +36,7 @@ public class UserController {
     public Object login(@RequestBody User user){
         String name = user.getName();
         String password = user.getPassword();
-        User u2 = userService.selectUserWithPassword(name);
+        User u2 = userService.selectUserByName(name, true);
         Assert.notNull(u2, "用户名或密码错误");
         //使用RSA私钥解密前端用公钥加密过的密码
         password = RSAUtils.decode(password, RSA.getPrivateKey());
@@ -44,16 +44,17 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //与数据库中已加密过的密码对比
         Assert.isTrue(passwordEncoder.matches(password, u2.getPassword()), "用户名或密码错误");
-        userService.setLastLogin(name);
-        return Result.success(JWTUtils.getToken(name, u2.getPassword()));
+        Long id = u2.getId();
+        userService.setLastLogin(id);
+        return Result.success(JWTUtils.getToken(id, u2.getPassword()));
     }
     @PostMapping("/signUp")
     public Object signUp(@RequestBody User user){
         String name = user.getName();
         String password = user.getPassword();
         //先验证是否已经存在同名用户
-        User u2 = userService.selectUserWithPassword(name);
-        Assert.isNull(u2, "已存在该用户");
+        User u2 = userService.selectUserByName(name, false);
+        Assert.isNull(u2, "该用户名已被使用");
         //使用RSA私钥解密前端用公钥加密过的密码
         password = RSAUtils.decode(password, RSA.getPrivateKey());
         //再使用BCrypt重新加密
@@ -61,7 +62,8 @@ public class UserController {
         String encryptedPassword = passwordEncoder.encode(password);
         user.setPassword(encryptedPassword);
         userService.signUp(user);
-        return Result.success(JWTUtils.getToken(name, user.getPassword()));
+        User u3 = userService.selectUserByName(name, false);
+        return Result.success(JWTUtils.getToken(u3.getId(), encryptedPassword));
     }
     @PostMapping("/modifyPassword")
     public Object modifyPassword(@RequestBody Map<String, Object> map){
@@ -74,7 +76,7 @@ public class UserController {
         User user = JWTUtils.getCurrentUser();
         Assert.notNull(user, "找不到用户");
         //需要从另一个接口获取旧密码
-        String oldPassword2 = userService.selectUserWithPassword(user.getName()).getPassword();
+        String oldPassword2 = userService.selectUser(user.getId(), true).getPassword();
         Assert.isTrue(passwordEncoder.matches(oldPassword, oldPassword2), "旧密码有误");
         user.setPassword(encryptedNewPassword);
         userService.setPassword(user);

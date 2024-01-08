@@ -76,3 +76,16 @@ export function postModifyAvatar(avatar:string){
     }
   })  
 }
+
+export function postCreateBlog(title:string, description:string, content:string, status:number){
+  return request({
+    url: '/createBlog',
+    method: 'post',
+    data: {
+      title,
+      description,
+      content,
+      status,
+    }
+  })  
+}

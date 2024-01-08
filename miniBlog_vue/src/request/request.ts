@@ -35,9 +35,9 @@ export  const request =(options:any)=> {
                 return response.data
             },
             error => {
-                console.log('err' + error)
-                if(error.response.status == 403){
-                    ElMessage.error('没有权限访问')
+                console.log(error)
+                if(error.response.data.code === 401){
+                    ElMessage.error('没有权限访问，请重新登录')
                 }else{
                     ElMessage.error('服务器请求错误，请稍后再试')
                 }

@@ -35,14 +35,14 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new TokenException("无token，请重新登录");
         }
         // 获取 token 中的 user id
-        String name;
+        Long id = 0L;
         try {
-            name = JWT.decode(token).getAudience().get(0);
+            id = Long.valueOf(JWT.decode(token).getAudience().get(0));
         } catch (JWTDecodeException j) {
             throw new TokenException("token验证失败，请重新登录");
         }
         // 根据token中的userid查询数据库
-        User user = userService.selectUserWithPassword(name);
+        User user = userService.selectUser(id, true);
         if (user == null) {
             throw new TokenException("用户不存在，请重新登录");
         }

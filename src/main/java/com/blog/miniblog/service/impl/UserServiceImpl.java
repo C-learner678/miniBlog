@@ -13,28 +13,28 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    public User selectUser(String name, boolean password) {
-        User user = this.userMapper.selectUser(name);
-        if(!password){
+    public User selectUser(Long id, boolean returnPassword) {
+        User user = this.userMapper.selectUser(id);
+        if(!returnPassword && user != null){
             user.setPassword(null);
         }
         return user;
     }
 
-    public User selectUserWithPassword(String name) {
-        return this.selectUser(name, true);
-    }
-
-    public User selectUserWithoutPassword(String name) {
-        return this.selectUser(name, false);
-    }
-
-    public void setLastLogin(String name) {
-        this.userMapper.setLastLogin(name);
+    public User selectUserByName(String name, boolean returnPassword) {
+        User user = this.userMapper.selectUserByName(name);
+        if(!returnPassword && user != null){
+            user.setPassword(null);
+        }
+        return user;
     }
 
     public void signUp(User user){
-        this.userMapper.signUp(user);
+        this.userMapper.insertUser(user);
+    }
+
+    public void setLastLogin(Long id) {
+        this.userMapper.setLastLogin(id);
     }
 
     public void setPassword(User user) {

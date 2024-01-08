@@ -16,7 +16,7 @@ public class GlobalExceptionHandler{
     @ExceptionHandler(value = TokenException.class)
     public Result handler(TokenException e){
         log.error("Token异常：" + e.getMessage());
-        return Result.fail(e.getMessage());
+        return Result.result(401, e.getMessage(), "请重新登录");
     }
     //Assert
     @ResponseStatus(HttpStatus.BAD_REQUEST)

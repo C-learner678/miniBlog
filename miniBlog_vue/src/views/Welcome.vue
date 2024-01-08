@@ -29,6 +29,9 @@
       <ElButton @click="modifyPassword">修改密码</ElButton>
       <ElButton @click="logout">退出登录</ElButton>
     </div>
+    <div>
+      <ElButton @click="createBlog">创建博客</ElButton>
+    </div>
   </div>
 </template>
 
@@ -80,6 +83,10 @@ function modifyPassword(){
 
 function modifyAvatar(){
   router.push( {path: '/modifyAvatar'} )
+}
+
+function createBlog(){
+  router.push( {path: '/createBlog'} )
 }
 
 </script>

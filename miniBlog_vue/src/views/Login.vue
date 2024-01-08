@@ -21,7 +21,7 @@
       </el-form>
     </el-col>
     <el-col :span="10"></el-col>
-</el-row>
+  </el-row>
 </template>
 
 <script lang="ts" setup>

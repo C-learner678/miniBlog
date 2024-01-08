@@ -28,8 +28,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { ElButton, ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
 
 import { getUserInfo } from '../api/api'
 

@@ -28,13 +28,13 @@ public class JWTUtils {
         staticUserService = userService;
     }
 
-    public static String getToken(String name, String password) {
+    public static String getToken(Long id, String password) {
         Date currentDate = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         Date modifiedDate = calendar.getTime();
-        return JWT.create().withAudience(name) // 将 user id 保存到 token 里面,作为载荷
+        return JWT.create().withAudience(String.valueOf(id)) // 将 user的id 保存到 token 里面,作为载荷
                 .withExpiresAt(modifiedDate) // 2小时后token过期
                 .sign(Algorithm.HMAC256(password)); // 以 password 作为 token 的密钥
     }
@@ -44,8 +44,8 @@ public class JWTUtils {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader("token");
             if (token != null && !token.isBlank()) {
-                String name = JWT.decode(token).getAudience().get(0);
-                return staticUserService.selectUserWithoutPassword(name);
+                Long id = Long.valueOf(JWT.decode(token).getAudience().get(0));
+                return staticUserService.selectUser(id, false);
             }
         } catch (Exception e) {
             return null;
