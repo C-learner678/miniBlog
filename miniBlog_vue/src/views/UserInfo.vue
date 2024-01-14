@@ -34,14 +34,15 @@ import { getUserInfo } from '../api/api'
 const name = ref("")
 const email = ref("")
 const description = ref("")
-const created = ref(new Date())
-const lastLogin = ref(new Date())
+const created = ref("")
+const lastLogin = ref("")
 
 const available = ref(false)
 let avatarUrl = ""
 
+const route = useRoute()
+
 onMounted(() => {
-  const route = useRoute()
   let username = route.params.username
   getUserInfo(username)
   .then((res) => {

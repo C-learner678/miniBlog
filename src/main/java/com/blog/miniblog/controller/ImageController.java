@@ -36,7 +36,7 @@ public class ImageController {
         }
     }
     @PostMapping("/upload")
-    public Result upload(@RequestParam("file") MultipartFile file) {
+    public Result uploadAvatar(@RequestParam("file") MultipartFile file) {
         try {
             String originalFileName = file.getOriginalFilename();
             Assert.notNull(originalFileName, "文件名缺失");

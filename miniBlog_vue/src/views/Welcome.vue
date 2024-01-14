@@ -37,7 +37,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 import { ElButton, ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
@@ -48,8 +47,8 @@ const router = useRouter()
 const name = ref("")
 const email = ref("")
 const description = ref("")
-const created = ref(new Date())
-const lastLogin = ref(new Date())
+const created = ref("")
+const lastLogin = ref("")
 
 const available = ref(false)
 let avatarUrl = ""

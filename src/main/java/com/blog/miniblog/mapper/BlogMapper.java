@@ -8,4 +8,8 @@ public interface BlogMapper {
     public Blog selectBlog(Long id);
     public void insertBlog(Blog blog);
     public void updateBlog(Blog blog);
+    public Blog selectUnfinishedBlogByUser(Long userId);
+    public void insertUnfinishedBlog(Blog blog);
+    public void updateUnfinishedBlogByUser(Blog blog);
+    public void deleteUnfinishedBlogByUser(Long userId);
 }

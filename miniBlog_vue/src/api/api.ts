@@ -77,7 +77,21 @@ export function postModifyAvatar(avatar:string){
   })  
 }
 
-export function postCreateBlog(title:string, description:string, content:string, status:number){
+export function getBlog(blogId: String){
+  return request({
+    url: '/blog/' + blogId,
+    method: 'get',
+  })  
+}
+
+export function getUnfinishedBlog(){
+  return request({
+    url: '/getUnfinishedBlog',
+    method: 'post',
+  })  
+}
+
+export function postCreateBlog(title:string, description:string, content:string){
   return request({
     url: '/createBlog',
     method: 'post',
@@ -85,7 +99,18 @@ export function postCreateBlog(title:string, description:string, content:string,
       title,
       description,
       content,
-      status,
+    }
+  })  
+}
+
+export function postSaveBlog(title:string, description:string, content:string){
+  return request({
+    url: '/saveBlog',
+    method: 'post',
+    data: {
+      title,
+      description,
+      content,
     }
   })  
 }

@@ -9,11 +9,29 @@
     </select>
     <insert id="insertBlog" parameterType="com.blog.miniblog.entity.Blog">
         INSERT INTO blog(user_id, title, description, content, status, created, last_modified)
-        VALUES (#{userId}, #{title}, #{description}, #{content}, #{status}, now(), now())
+        VALUES (#{userId}, #{title}, #{description}, #{content}, 0, now(), now())
     </insert>
     <update id="updateBlog" parameterType="com.blog.miniblog.entity.Blog">
         UPDATE blog
-        SET title = #{title}, description = #{description}, content = #{content}, status = #{status}, last_modified = now()
+        SET title = #{title}, description = #{description}, content = #{content}, last_modified = now()
         WHERE id = #{id}
     </update>
+    <select id="selectUnfinishedBlogByUser" resultType="com.blog.miniblog.entity.Blog">
+        SELECT id, user_id, title, description, content, status, created, last_modified
+        FROM unfinished_blog
+        WHERE user_id = #{userId}
+    </select>
+    <insert id="insertUnfinishedBlog" parameterType="com.blog.miniblog.entity.Blog">
+        INSERT INTO unfinished_blog(user_id, title, description, content, status, created, last_modified)
+        VALUES (#{userId}, #{title}, #{description}, #{content}, 0, now(), now())
+    </insert>
+    <update id="updateUnfinishedBlogByUser" parameterType="com.blog.miniblog.entity.Blog">
+        UPDATE unfinished_blog
+        SET title = #{title}, description = #{description}, content = #{content}, last_modified = now()
+        WHERE user_id = #{userId}
+    </update>
+    <delete id="deleteUnfinishedBlogByUser" parameterType="Long">
+        DELETE FROM unfinished_blog
+        WHERE user_id = #{userId}
+    </delete>
 </mapper>

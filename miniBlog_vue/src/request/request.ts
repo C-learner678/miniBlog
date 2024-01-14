@@ -5,7 +5,7 @@ import { ElMessage  } from 'element-plus'
 
 export  const request =(options:any)=> {
     return new Promise((resolve, reject) => {
-
+            
         // create an axios instance
         const service = axios.create({
             // baseURL: process.env.BASE_API, // api 的 base_url
@@ -37,7 +37,8 @@ export  const request =(options:any)=> {
             error => {
                 console.log(error)
                 if(error.response.data.code === 401){
-                    ElMessage.error('没有权限访问，请重新登录')
+                    ElMessage.error('未登录或登录状态已过期，请重新登录')
+                    sessionStorage.clear()
                 }else{
                     ElMessage.error('服务器请求错误，请稍后再试')
                 }

@@ -19,6 +19,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="modifyPassword(passwordFormRef)">修改密码</el-button>
+          <ElButton @click="toWelcome">返回</ElButton>
         </el-form-item>
       </el-form>
     </el-col>
@@ -99,4 +100,7 @@ const modifyPassword = async (formEl: FormInstance | undefined) => {
   })
 }
 
+function toWelcome(){
+  router.push({ path: 'welcome' })
+}
 </script>

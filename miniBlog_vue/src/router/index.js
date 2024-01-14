@@ -8,6 +8,7 @@ import ModifyPassword from '../views/ModifyPassword.vue'
 import ModifyInfo from '../views/ModifyInfo.vue'
 import ModifyAvatar from '../views/ModifyAvatar.vue'
 import CreateBlog from '../views/CreateBlog.vue'
+import BlogView from '../views/BlogView.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/createBlog',
     name: 'createBlog',
     component: CreateBlog
+  },
+  {
+    path: '/blog/:blogId',
+    name: 'Blog',
+    component: BlogView
   },
 ];
 

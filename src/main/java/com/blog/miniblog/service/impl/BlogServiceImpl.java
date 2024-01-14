@@ -24,4 +24,20 @@ public class BlogServiceImpl implements BlogService {
     public void modifyBlog(Blog blog) {
         this.blogMapper.updateBlog(blog);
     }
+
+    public Blog selectUnfinishedBlogByUser(Long userId) {
+        return this.blogMapper.selectUnfinishedBlogByUser(userId);
+    }
+
+    public void saveBlog(Blog blog) {
+        this.blogMapper.insertUnfinishedBlog(blog);
+    }
+
+    public void updateUnfinishedBlogByUser(Blog blog){
+        this.blogMapper.updateUnfinishedBlogByUser(blog);
+    }
+
+    public void deleteUnfinishedBlogByUser(Long userId){
+        this.blogMapper.deleteUnfinishedBlogByUser(userId);
+    }
 }

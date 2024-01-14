@@ -19,6 +19,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="modifyInfo(infoFormRef)">修改个人信息</el-button>
+          <ElButton @click="toWelcome">返回</ElButton>
         </el-form-item>
       </el-form>
     </el-col>
@@ -77,4 +78,7 @@ onMounted(() => {
   })
 })
 
+function toWelcome(){
+  router.push({ path: 'welcome' })
+}
 </script>
